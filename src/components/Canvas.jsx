@@ -7,11 +7,15 @@ const Canvas = ({
   selectedColor,
   selected,
 }) => {
-  const paintPixel = (i, j) => {
+  const paintPixel = (i, j, erase = false) => {
     setCanvas((prev) =>
       prev.map((row, rowIndex) =>
         row.map((v, colIndex) =>
-          rowIndex == i && colIndex == j ? selectedColor : v,
+          rowIndex == i && colIndex == j
+            ? !erase
+              ? selectedColor
+              : "#3e3e3e"
+            : v,
         ),
       ),
     );
@@ -27,7 +31,7 @@ const Canvas = ({
           WebkitUserDrag: "none",
           touchAction: "none",
         }}
-        className={`grid grid-cols-[repeat(${gridVal},8px)] grid-rows-[repeat(${gridVal},8px)] select-none`}
+        className={`grid grid-cols-[repeat(${gridVal},8px)] grid-rows-[repeat(${gridVal},8px)] select-none cursor-pointer`}
       >
         {canvas.flat().map((val, index) => {
           const i = Math.floor(index / gridVal);
@@ -41,12 +45,16 @@ const Canvas = ({
               onMouseDown={() => {
                 if (selected == 1) {
                   paintPixel(i, j);
+                } else if (selected == 2) {
+                  paintPixel(i, j, true);
                 }
               }}
               onMouseEnter={(e) => {
                 if (e.buttons == 1) {
                   if (selected == 1) {
                     paintPixel(i, j);
+                  } else if (selected == 2) {
+                    paintPixel(i, j, true);
                   }
                 }
               }}
