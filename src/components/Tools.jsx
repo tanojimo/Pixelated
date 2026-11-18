@@ -16,7 +16,13 @@ const Tools = ({
         <div className="grid grid-cols-2 grid-rows2 px-2 py-2 gap-[5%] p-[5%] w-full aspect-square">
           <div
             className={`w-full aspect-square rounded-lg border-2 ${selected == 1 ? "border-white" : "border-bl200"} flex justify-center items-center group hover:border-white duration-75`}
-            onClick={() => setSelected(1)}
+            onClick={() => {
+              if (selected == 1) {
+                setSelected(0);
+              } else {
+                setSelected(1);
+              }
+            }}
           >
             <div className="w-[50%]">
               <Brush selected={selected} />
@@ -24,7 +30,13 @@ const Tools = ({
           </div>
           <div
             className={`w-full aspect-square rounded-lg border-2 ${selected == 2 ? "border-white" : "border-bl200"} flex justify-center items-center hover:border-white duration-75`}
-            onClick={() => setSelected(2)}
+            onClick={() => {
+              if (selected == 2) {
+                setSelected(0);
+              } else {
+                setSelected(2);
+              }
+            }}
           >
             <div className="w-[45%]">
               <Bucket selected={selected} />
@@ -32,7 +44,13 @@ const Tools = ({
           </div>
           <div
             className={`w-full aspect-square rounded-lg border-2 ${selected == 3 ? "border-white" : "border-bl200"} flex justify-center items-center hover:border-white duration-75`}
-            onClick={() => setSelected(3)}
+            onClick={() => {
+              if (selected == 3) {
+                setSelected(0);
+              } else {
+                setSelected(3);
+              }
+            }}
           >
             <div className="w-[45%]">
               <Eraser selected={selected} />
@@ -40,7 +58,13 @@ const Tools = ({
           </div>
           <div
             className={`w-full aspect-square rounded-lg border-2 ${selected == 4 ? "border-white" : "border-bl200"} flex justify-center items-center hover:border-white duration-75`}
-            onClick={() => setSelected(4)}
+            onClick={() => {
+              if (selected == 4) {
+                setSelected(0);
+              } else {
+                setSelected(4);
+              }
+            }}
           >
             <div className="w-[45%]">
               <Picker selected={selected} />

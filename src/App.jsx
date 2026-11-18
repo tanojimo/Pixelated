@@ -63,6 +63,7 @@ const App = () => {
         gridVal={gridVal}
         scale={scale}
         selectedColor={selectedColor}
+        selected={selected}
       />
     </div>
   );

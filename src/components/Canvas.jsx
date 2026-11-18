@@ -5,6 +5,7 @@ const Canvas = ({
   gridVal,
   scale,
   selectedColor,
+  selected,
 }) => {
   const paintPixel = (i, j) => {
     setCanvas((prev) =>
@@ -37,10 +38,16 @@ const Canvas = ({
               draggable={false}
               className="w-2 h-2 border-[0.2px] border-bl200 text-black text-[0.3rem]"
               style={{ background: val }}
-              onMouseDown={() => paintPixel(i, j)}
+              onMouseDown={() => {
+                if (selected == 1) {
+                  paintPixel(i, j);
+                }
+              }}
               onMouseEnter={(e) => {
                 if (e.buttons == 1) {
-                  paintPixel(i, j);
+                  if (selected == 1) {
+                    paintPixel(i, j);
+                  }
                 }
               }}
             ></div>
