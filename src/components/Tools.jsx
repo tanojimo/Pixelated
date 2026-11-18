@@ -3,7 +3,13 @@ import Bucket from "./svg/bucket";
 import Eraser from "./svg/eraser";
 import Picker from "./svg/picker";
 
-const Tools = ({ selected, setSelected, pickerRef, selectedColor }) => {
+const Tools = ({
+  selected,
+  setSelected,
+  pickerRef,
+  selectedColor,
+  setCanvas,
+}) => {
   return (
     <div className="col-span-3 w-full h-full bg-bl400 rounded-r-2xl gap-1 grid grid-rows-12">
       <div className="w-full h-full row-span-9">
@@ -57,7 +63,12 @@ const Tools = ({ selected, setSelected, pickerRef, selectedColor }) => {
           <div className="w-22 h-6 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] pb-px cursor-pointer">
             Undo
           </div>
-          <div className="w-22 h-6 bg-red-500 rounded-xl flex justify-center items-center text-[0.8rem] pb-px cursor-pointer">
+          <div
+            className="w-22 h-6 bg-red-500 rounded-xl flex justify-center items-center text-[0.8rem] pb-px cursor-pointer"
+            onClick={() =>
+              setCanvas((prev) => prev.map((row) => row.map(() => "#3e3e3e")))
+            }
+          >
             Remove All
           </div>
         </div>

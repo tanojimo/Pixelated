@@ -54,6 +54,7 @@ const App = () => {
         setSelected={setSelected}
         pickerRef={pickerRef}
         selectedColor={selectedColor}
+        setCanvas={setCanvas}
       />
       <Canvas
         canvas={canvas}

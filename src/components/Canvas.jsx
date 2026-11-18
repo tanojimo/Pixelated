@@ -19,8 +19,14 @@ const Canvas = ({
     <div className="col-span-9 w-full h-full flex justify-center items-center">
       <div
         ref={canvasRef}
-        style={{ transform: `scale(${scale})` }}
-        className={`grid grid-cols-[repeat(${gridVal},8px)] grid-rows-[repeat(${gridVal},8px)]`}
+        onDragStart={(e) => e.preventDefault()}
+        style={{
+          transform: `scale(${scale})`,
+          userSelect: "none",
+          WebkitUserDrag: "none",
+          touchAction: "none",
+        }}
+        className={`grid grid-cols-[repeat(${gridVal},8px)] grid-rows-[repeat(${gridVal},8px)] select-none`}
       >
         {canvas.flat().map((val, index) => {
           const i = Math.floor(index / gridVal);
