@@ -4,7 +4,6 @@ import Eraser from "./svg/eraser";
 import Picker from "./svg/picker";
 
 const Tools = ({ selected, setSelected, pickerRef, selectedColor }) => {
-  console.log(`w-[40%] h-[60%] rounded-xl bg-[${selectedColor}]`);
   return (
     <div className="col-span-3 w-full h-full bg-bl400 rounded-r-2xl gap-1 grid grid-rows-12">
       <div className="w-full h-full row-span-9">
