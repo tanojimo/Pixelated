@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Brush from "./svg/brush";
 import Bucket from "./svg/bucket";
 import Eraser from "./svg/eraser";
@@ -9,7 +10,39 @@ const Tools = ({
   pickerRef,
   selectedColor,
   setCanvas,
+  history,
+  setHistory,
+  gridVal,
 }) => {
+  const undo = () => {
+    let last;
+    if (history.at(-2)) {
+      last = history.at(-2);
+    } else {
+      last = Array.from({ length: gridVal }, () =>
+        Array(gridVal).fill("#3e3e3e"),
+      );
+    }
+    console.log(last);
+    setHistory((prev) => prev.filter((_, i) => i !== history.length - 1));
+    setCanvas(last);
+  };
+
+  useEffect(() => {
+    const handleCTRLZ = (e) => {
+      if (e.ctrlKey && e.key == "z") {
+        e.preventDefault();
+        undo();
+      }
+    };
+
+    window.addEventListener("keydown", handleCTRLZ);
+
+    return () => {
+      window.removeEventListener("keydown", handleCTRLZ);
+    };
+  }, [history]);
+
   return (
     <div className="col-span-3 w-full h-full bg-bl400 rounded-r-2xl gap-1 grid grid-rows-12">
       <div className="w-full h-full row-span-9">
@@ -84,7 +117,12 @@ const Tools = ({
       </div>
       <div className="w-full h-full row-span-3 flex flex-col justify-center items-center gap-2">
         <div className="flex gap-1">
-          <div className="w-22 h-6 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] pb-px cursor-pointer">
+          <div
+            className="w-22 h-6 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] pb-px cursor-pointer"
+            onClick={() => {
+              undo();
+            }}
+          >
             Undo
           </div>
           <div

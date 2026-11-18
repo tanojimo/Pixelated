@@ -6,6 +6,7 @@ const Canvas = ({
   scale,
   selectedColor,
   selected,
+  setHistory,
 }) => {
   const paintPixel = (i, j, erase = false) => {
     setCanvas((prev) =>
@@ -25,6 +26,11 @@ const Canvas = ({
       <div
         ref={canvasRef}
         onDragStart={(e) => e.preventDefault()}
+        onMouseUp={() => {
+          if (!selected == 0 || !selected == 4) {
+            setHistory((prev) => [...prev, canvas]);
+          }
+        }}
         style={{
           transform: `scale(${scale})`,
           userSelect: "none",
@@ -45,7 +51,7 @@ const Canvas = ({
               onMouseDown={() => {
                 if (selected == 1) {
                   paintPixel(i, j);
-                } else if (selected == 2) {
+                } else if (selected == 3) {
                   paintPixel(i, j, true);
                 }
               }}
@@ -53,7 +59,7 @@ const Canvas = ({
                 if (e.buttons == 1) {
                   if (selected == 1) {
                     paintPixel(i, j);
-                  } else if (selected == 2) {
+                  } else if (selected == 3) {
                     paintPixel(i, j, true);
                   }
                 }

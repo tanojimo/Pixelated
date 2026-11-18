@@ -10,6 +10,7 @@ const App = () => {
   const [selected, setSelected] = useState(0);
   const [selectedColor, setSelectedColor] = useState("#ffffff");
   const [scale, setScale] = useState(1);
+  const [history, setHistory] = useState([]);
   const [canvas, setCanvas] = useState(
     Array.from({ length: gridVal }, () => Array(gridVal).fill("#3e3e3e")),
   );
@@ -55,6 +56,9 @@ const App = () => {
         pickerRef={pickerRef}
         selectedColor={selectedColor}
         setCanvas={setCanvas}
+        setHistory={setHistory}
+        history={history}
+        gridVal={gridVal}
       />
       <Canvas
         canvas={canvas}
@@ -64,6 +68,8 @@ const App = () => {
         scale={scale}
         selectedColor={selectedColor}
         selected={selected}
+        setHistory={setHistory}
+        history={history}
       />
     </div>
   );
