@@ -70,6 +70,7 @@ const App = () => {
         selected={selected}
         setHistory={setHistory}
         history={history}
+        setSelectedColor={setSelectedColor}
       />
     </div>
   );

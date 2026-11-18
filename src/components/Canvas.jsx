@@ -5,6 +5,7 @@ const Canvas = ({
   gridVal,
   scale,
   selectedColor,
+  setSelectedColor,
   selected,
   setHistory,
 }) => {
@@ -53,6 +54,8 @@ const Canvas = ({
                   paintPixel(i, j);
                 } else if (selected == 3) {
                   paintPixel(i, j, true);
+                } else if (selected == 4) {
+                  setSelectedColor(val);
                 }
               }}
               onMouseEnter={(e) => {
