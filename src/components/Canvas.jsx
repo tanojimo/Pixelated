@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 const Canvas = ({
   canvas,
   setCanvas,
@@ -9,6 +11,20 @@ const Canvas = ({
   selected,
   setHistory,
 }) => {
+  const lastPixel = useRef(null);
+  const paintLine = (x0, y0, x1, y1, erase = false) => {
+    const dx = x1 - x0;
+    const dy = y1 - y0;
+    const step = Math.max(Math.abs(dx), Math.abs(dy));
+    if (step != 0) {
+      const sx = dx / step;
+      const sy = dy / step;
+
+      for (let i = 0; i <= step; i++) {
+        paintPixel(Math.round(y0 + i * sy), Math.round(x0 + i * sx), erase);
+      }
+    }
+  };
   const paintPixel = (i, j, erase = false) => {
     setCanvas((prev) =>
       prev.map((row, rowIndex) =>
@@ -28,7 +44,7 @@ const Canvas = ({
         ref={canvasRef}
         onDragStart={(e) => e.preventDefault()}
         onMouseUp={() => {
-          if (!selected == 0 || !selected == 4) {
+          if (selected != 0 && selected != 4) {
             setHistory((prev) => [...prev, canvas]);
           }
         }}
@@ -51,19 +67,28 @@ const Canvas = ({
               style={{ background: val }}
               onMouseDown={() => {
                 if (selected == 1) {
+                  lastPixel.current = { i, j };
                   paintPixel(i, j);
                 } else if (selected == 3) {
+                  lastPixel.current = { i, j };
                   paintPixel(i, j, true);
                 } else if (selected == 4) {
                   setSelectedColor(val);
                 }
               }}
               onMouseEnter={(e) => {
-                if (e.buttons == 1) {
+                if (e.buttons == 1 && lastPixel.current) {
                   if (selected == 1) {
-                    paintPixel(i, j);
+                    paintLine(lastPixel.current.j, lastPixel.current.i, j, i);
+                    lastPixel.current = { i, j };
                   } else if (selected == 3) {
-                    paintPixel(i, j, true);
+                    paintLine(
+                      lastPixel.current.j,
+                      lastPixel.current.i,
+                      j,
+                      i,
+                      true,
+                    );
                   }
                 }
               }}
