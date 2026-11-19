@@ -25,6 +25,7 @@ const Canvas = ({
       }
     }
   };
+
   const paintPixel = (i, j, erase = false) => {
     setCanvas((prev) =>
       prev.map((row, rowIndex) =>
@@ -37,6 +38,43 @@ const Canvas = ({
         ),
       ),
     );
+  };
+
+  const floodFill = (x, y) => {
+    let final = [];
+    let arr = [[x, y]];
+    let visited = new Set();
+    console.log("Set arr: ", arr);
+    const color = canvas[x][y];
+    console.log("Set color: ", color);
+    if (color == selectedColor) {
+      return;
+    }
+    while (arr.length > 0) {
+      const [i, j] = arr.shift();
+      const key = `${i},${j}`;
+
+      if (visited.has(key)) {
+        continue;
+      }
+      visited.add(key);
+
+      if (
+        i < 0 ||
+        i >= canvas.length ||
+        j < 0 ||
+        j >= canvas.length ||
+        canvas[i][j] !== color
+      ) {
+        continue;
+      }
+
+      final.push([i, j]);
+      arr.push([i + 1, j], [i - 1, j], [i, j + 1], [i, j - 1]);
+    }
+    for (const val of final) {
+      paintPixel(val[0], val[1]);
+    }
   };
   return (
     <div className="col-span-9 w-full h-full flex justify-center items-center">
@@ -69,6 +107,9 @@ const Canvas = ({
                 if (selected == 1) {
                   lastPixel.current = { i, j };
                   paintPixel(i, j);
+                } else if (selected == 2) {
+                  console.log("Set arr: ");
+                  floodFill(i, j);
                 } else if (selected == 3) {
                   lastPixel.current = { i, j };
                   paintPixel(i, j, true);
