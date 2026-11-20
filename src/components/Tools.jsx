@@ -10,22 +10,15 @@ const Tools = ({
   pickerRef,
   selectedColor,
   setCanvas,
+  historyIndex,
+  setHistoryIndex,
   history,
-  setHistory,
-  gridVal,
 }) => {
   const undo = () => {
-    let last;
-    if (history.at(-2)) {
-      last = history.at(-2);
-    } else {
-      last = Array.from({ length: gridVal }, () =>
-        Array(gridVal).fill("#3e3e3e"),
-      );
-    }
-    console.log(last);
-    setHistory((prev) => prev.filter((_, i) => i !== history.length - 1));
-    setCanvas(last);
+    setHistoryIndex((prev) => Math.max(0, prev - 1));
+  };
+  const redo = () => {
+    setHistoryIndex((prev) => Math.min(history.length - 1, prev + 1));
   };
 
   useEffect(() => {
@@ -34,6 +27,10 @@ const Tools = ({
         e.preventDefault();
         undo();
       }
+      if (e.ctrlKey && e.key == "y") {
+        e.preventDefault();
+        redo();
+      }
     };
 
     window.addEventListener("keydown", handleCTRLZ);
@@ -41,7 +38,15 @@ const Tools = ({
     return () => {
       window.removeEventListener("keydown", handleCTRLZ);
     };
-  }, [history]);
+  }, [historyIndex, history]);
+
+  useEffect(() => {
+    if (historyIndex >= 0 && history[historyIndex]) {
+      setCanvas(history[historyIndex]);
+    }
+
+    return () => {};
+  }, [historyIndex, history]);
 
   return (
     <div className="col-span-3 w-full h-full bg-bl400 rounded-r-2xl gap-1 grid grid-rows-12">

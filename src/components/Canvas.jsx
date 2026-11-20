@@ -10,6 +10,8 @@ const Canvas = ({
   setSelectedColor,
   selected,
   setHistory,
+  historyIndex,
+  setHistoryIndex,
 }) => {
   const lastPixel = useRef(null);
   const paintLine = (x0, y0, x1, y1, erase = false) => {
@@ -83,7 +85,8 @@ const Canvas = ({
         onDragStart={(e) => e.preventDefault()}
         onMouseUp={() => {
           if (selected != 0 && selected != 4) {
-            setHistory((prev) => [...prev, canvas]);
+            setHistory((prev) => [...prev.slice(0, historyIndex + 1), canvas]);
+            setHistoryIndex((prev) => prev + 1);
           }
         }}
         style={{
@@ -92,7 +95,7 @@ const Canvas = ({
           WebkitUserDrag: "none",
           touchAction: "none",
         }}
-        className={`grid grid-cols-[repeat(${gridVal},8px)] grid-rows-[repeat(${gridVal},8px)] select-none cursor-pointer`}
+        className={`grid grid-cols-[repeat(32,12px)] grid-rows-[repeat(32,12px)] select-none cursor-pointer`}
       >
         {canvas.flat().map((val, index) => {
           const i = Math.floor(index / gridVal);
@@ -101,7 +104,7 @@ const Canvas = ({
             <div
               key={index}
               draggable={false}
-              className="w-2 h-2 border-[0.2px] border-bl200 text-black text-[0.3rem]"
+              className="w-full h-full border-[0.2px] border-bl200 text-black text-[0.3rem]"
               style={{ background: val }}
               onMouseDown={() => {
                 if (selected == 1) {
