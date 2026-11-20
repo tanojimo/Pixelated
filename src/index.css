@@ -12,3 +12,11 @@
 body {
   @apply bg-bl500 text-text;
 }
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+.tool {
+  box-shadow: 12px 0px 10px -8px rgba(0, 0, 0, 0.55);
+}

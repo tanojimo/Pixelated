@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import Canvas from "./components/Canvas";
 import Tools from "./components/Tools";
-import iro from "@jaames/iro";
 
 const App = () => {
   const gridVal = 32;
@@ -36,22 +35,22 @@ const App = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const picker = new iro.ColorPicker(pickerRef.current, {
-      width: 100,
-      color: selectedColor,
-    });
+  // useEffect(() => {
+  //   const picker = new iro.ColorPicker(pickerRef.current, {
+  //     width: 100,
+  //     color: selectedColor,
+  //   });
 
-    picker.on("color:change", (color) => {
-      setSelectedColor(color.hexString);
-    });
-    return () => {
-      pickerRef.current.innerHTML = "";
-    };
-  }, []);
+  //   picker.on("color:change", (color) => {
+  //     setSelectedColor(color.hexString);
+  //   });
+  //   return () => {
+  //     pickerRef.current.innerHTML = "";
+  //   };
+  // }, []);
 
   return (
-    <div className="w-screen h-screen grid grid-cols-12">
+    <div className="w-screen min-h-screen grid grid-cols-[repeat(12,minmax(0,1fr))]">
       <Tools
         selected={selected}
         setSelected={setSelected}
