@@ -10,7 +10,8 @@ const App = () => {
   const canvasRef = useRef(null);
   const pickerRef = useRef(null);
   const [selected, setSelected] = useState(0);
-  const [selectedColor, setSelectedColor] = useState("#ffffff");
+  const [selectedColorLeft, setSelectedColorLeft] = useState("#ffffff");
+  const [selectedColorRight, setSelectedColorRight] = useState("#000000");
   const [scale, setScale] = useState(1);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [history, setHistory] = useState([initialCanvas]);
@@ -38,11 +39,11 @@ const App = () => {
   // useEffect(() => {
   //   const picker = new iro.ColorPicker(pickerRef.current, {
   //     width: 100,
-  //     color: selectedColor,
+  //     color: selectedColorLeft,
   //   });
 
   //   picker.on("color:change", (color) => {
-  //     setSelectedColor(color.hexString);
+  //     setSelectedColorLeft(color.hexString);
   //   });
   //   return () => {
   //     pickerRef.current.innerHTML = "";
@@ -50,12 +51,15 @@ const App = () => {
   // }, []);
 
   return (
-    <div className="w-screen min-h-screen grid grid-cols-[repeat(12,minmax(0,1fr))]">
+    <div className="w-screen min-h-screen grid grid-cols-12">
       <Tools
         selected={selected}
         setSelected={setSelected}
         pickerRef={pickerRef}
-        selectedColor={selectedColor}
+        selectedColorLeft={selectedColorLeft}
+        selectedColorRight={selectedColorRight}
+        setSelectedColorLeft={setSelectedColorLeft}
+        setSelectedColorRight={setSelectedColorRight}
         setCanvas={setCanvas}
         setHistoryIndex={setHistoryIndex}
         historyIndex={historyIndex}
@@ -68,11 +72,13 @@ const App = () => {
         canvasRef={canvasRef}
         gridVal={gridVal}
         scale={scale}
-        selectedColor={selectedColor}
+        selectedColorLeft={selectedColorLeft}
+        selectedColorRight={selectedColorRight}
         selected={selected}
         setHistory={setHistory}
         history={history}
-        setSelectedColor={setSelectedColor}
+        setSelectedColorLeft={setSelectedColorLeft}
+        setSelectedColorRight={setSelectedColorRight}
         historyIndex={historyIndex}
         setHistoryIndex={setHistoryIndex}
       />

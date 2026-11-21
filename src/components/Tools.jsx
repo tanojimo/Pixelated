@@ -7,8 +7,10 @@ import Picker from "./svg/picker";
 const Tools = ({
   selected,
   setSelected,
-  pickerRef,
-  selectedColor,
+  selectedColorLeft,
+  selectedColorRight,
+  setSelectedColorLeft,
+  setSelectedColorRight,
   setCanvas,
   historyIndex,
   setHistoryIndex,
@@ -148,21 +150,19 @@ const Tools = ({
               type="color"
               name=""
               id=""
+              value={selectedColorLeft}
               className="absolute top-0 left-0 w-5/6 h-5/6 rounded-2xl z-10"
+              onChange={(e) => setSelectedColorLeft(e.target.value)}
             />
             <input
               type="color"
               name=""
               id=""
+              value={selectedColorRight}
               className="absolute bottom-0 right-0 w-5/6 h-5/6 rounded-2xl"
+              onChange={(e) => setSelectedColorRight(e.target.value)}
             />
           </div>
-          <input
-            type="text"
-            name=""
-            id=""
-            className="border-2 border-bl200 rounded-xl px-2 py-1 w-20 outline-none focus:outline-none text-sm"
-          />
         </div>
       </div>
 
