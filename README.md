@@ -29,6 +29,7 @@ The webapp has some other useful features.
 ## Build with
 
 - HTML5
+- CSS
 - ReactJS
 - Javascript
 - TailwindCSS
