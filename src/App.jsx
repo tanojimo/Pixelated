@@ -9,6 +9,7 @@ const App = () => {
   );
   const canvasRef = useRef(null);
   const pickerRef = useRef(null);
+  const [capturing, setCapturing] = useState(false);
   const [selected, setSelected] = useState(0);
   const [selectedColorLeft, setSelectedColorLeft] = useState("#ffffff");
   const [selectedColorRight, setSelectedColorRight] = useState("#000000");
@@ -45,7 +46,7 @@ const App = () => {
 
   return (
     <div
-      className="w-screen min-h-screen grid grid-cols-12"
+      className="w-screen min-h-screen grid grid-cols-[156px_1fr]"
       onClick={() => {
         setContextMenu((prev) => ({ ...prev, visible: false, color: null }));
       }}
@@ -90,6 +91,8 @@ const App = () => {
         setContextMenu={setContextMenu}
         palette={palette}
         setPalette={setPalette}
+        canvasRef={canvasRef}
+        setCapturing={setCapturing}
       />
       <Canvas
         canvas={canvas}
@@ -106,6 +109,7 @@ const App = () => {
         setSelectedColorRight={setSelectedColorRight}
         historyIndex={historyIndex}
         setHistoryIndex={setHistoryIndex}
+        capturing={capturing}
       />
     </div>
   );

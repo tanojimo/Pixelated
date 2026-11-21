@@ -3,6 +3,8 @@ import Brush from "./svg/brush";
 import Bucket from "./svg/bucket";
 import Eraser from "./svg/eraser";
 import Picker from "./svg/picker";
+import html2canvas from "html2canvas";
+import { flushSync } from "react-dom";
 
 const Tools = ({
   selected,
@@ -18,6 +20,8 @@ const Tools = ({
   setContextMenu,
   palette,
   setPalette,
+  canvasRef,
+  setCapturing,
 }) => {
   const [entered, setEntered] = useState(false);
   const dragCounter = useRef(0);
@@ -26,6 +30,18 @@ const Tools = ({
   };
   const redo = () => {
     setHistoryIndex((prev) => Math.min(history.length - 1, prev + 1));
+  };
+  const capture = async () => {
+    flushSync(() => {
+      setCapturing(true);
+    });
+    const c = await html2canvas(canvasRef.current, { scale: 1 });
+    const img = c.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = img;
+    link.download = "save.png";
+    link.click();
+    setCapturing(false);
   };
 
   useEffect(() => {
@@ -56,11 +72,11 @@ const Tools = ({
   }, [historyIndex, history, setCanvas]);
 
   return (
-    <div className="col-span-2 w-full h-full bg-bl400 rounded-r-2xl gap-1 grid grid-rows-12 z-10 tool">
+    <div className="w-full h-full bg-bl400 rounded-r-2xl gap-1 grid grid-rows-12 z-10 tool">
       {/* Undo/Redo/Clear */}
       <div className="row-span-1 flex justify-center gap-1 items-center">
         <div
-          className="w-7 aspect-square p-1.5 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] cursor-pointer"
+          className="w-7 aspect-square p-1.5 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] cursor-pointer controlBtn hover:shadow-[0_0_10px_rgba(255,255,255,255)] duration-75"
           onClick={() => {
             undo();
           }}
@@ -68,7 +84,7 @@ const Tools = ({
           <img src="/undo.svg" alt="" className="w-full" />
         </div>
         <div
-          className="w-7 aspect-square p-1.5 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] cursor-pointer"
+          className="w-7 aspect-square p-1.5 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] cursor-pointer hover:shadow-[0_0_10px_rgba(255,255,255,255)] duration-75"
           onClick={() => {
             redo();
           }}
@@ -76,7 +92,7 @@ const Tools = ({
           <img src="/redo.svg" alt="" className="w-full" />
         </div>
         <div
-          className="w-7 aspect-square p-1.5 bg-red-500 rounded-xl flex justify-center items-center text-[0.8rem] cursor-pointer"
+          className="w-7 aspect-square p-1.5 bg-red-500 rounded-xl flex justify-center items-center text-[0.8rem] cursor-pointer hover:shadow-[0_0_10px_rgba(255,255,255,255)] duration-75"
           onClick={() =>
             setCanvas((prev) => prev.map((row) => row.map(() => "#3e3e3e")))
           }
@@ -85,10 +101,10 @@ const Tools = ({
         </div>
       </div>
 
-      <div className="w-full h-full row-span-6 flex flex-col justify-center">
+      <div className="w-full h-full row-span-6 flex flex-col justify-center gap-2.5">
         {/* Tools */}
 
-        <div className="grid grid-cols-2 grid-rows-2 px-2 py-2 gap-[7%] p-[5%] w-full">
+        <div className="grid grid-cols-2 grid-rows-2 px-4 py-2 gap-x-[7%] gap-y-[14%] w-full">
           <div
             className={`w-full aspect-square rounded-lg border-2 ${selected == 1 ? "border-white" : "border-bl200"} flex justify-center items-center group hover:border-white duration-75`}
             onClick={() => {
@@ -156,7 +172,7 @@ const Tools = ({
               name=""
               id=""
               value={selectedColorLeft}
-              className="absolute top-0 left-0 w-5/6 h-5/6 rounded-2xl z-10"
+              className="absolute top-0 left-0 w-5/6 h-5/6 rounded-2xl z-10 cursor-pointer"
               onChange={(e) => setSelectedColorLeft(e.target.value)}
               onContextMenu={(e) => {
                 e.preventDefault();
@@ -173,7 +189,7 @@ const Tools = ({
               name=""
               id=""
               value={selectedColorRight}
-              className="absolute bottom-0 right-0 w-5/6 h-5/6 rounded-2xl"
+              className="absolute bottom-0 right-0 w-5/6 h-5/6 rounded-2xl cursor-pointer"
               onChange={(e) => setSelectedColorRight(e.target.value)}
               onContextMenu={(e) => {
                 e.preventDefault();
@@ -195,7 +211,7 @@ const Tools = ({
         <div className="w-full px-1 flex flex-row justify-between items-center gap-2">
           <p>Pallete</p>
           <div
-            className={`w-8 h-8 border-bl200 border-[1.5px] rounded-lg flex justify-center items-center ${entered && "bg-red-500"}`}
+            className={`w-8 h-8 border-bl200 border-[1.5px] rounded-lg flex justify-center items-center overflow-auto ${entered && "bg-red-500"}`}
             onDragEnter={(e) => {
               e.preventDefault();
               dragCounter.current++;
@@ -280,7 +296,10 @@ const Tools = ({
 
       {/* Export */}
       <div className="w-full h-full row-span-1 flex flex-col justify-center items-center gap-2">
-        <div className="w-22 h-6 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] pb-px cursor-pointer">
+        <div
+          className="w-22 h-6 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] pb-px cursor-pointer hover:shadow-[0_0_10px_rgba(255,255,255,255)]"
+          onClick={capture}
+        >
           Export
         </div>
       </div>

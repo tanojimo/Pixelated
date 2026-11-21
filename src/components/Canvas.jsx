@@ -14,6 +14,7 @@ const Canvas = ({
   setHistory,
   historyIndex,
   setHistoryIndex,
+  capturing,
 }) => {
   const lastPixel = useRef(null);
   const paintLine = (x0, y0, x1, y1, color, erase = false) => {
@@ -80,7 +81,7 @@ const Canvas = ({
     }
   };
   return (
-    <div className="col-span-10 w-full h-full flex gap-4 justify-center items-center">
+    <div className="w-full h-full flex gap-4 justify-center items-center overflow-hidden">
       <div
         ref={canvasRef}
         onDragStart={(e) => e.preventDefault()}
@@ -107,7 +108,7 @@ const Canvas = ({
             <div
               key={index}
               draggable={false}
-              className="w-full h-full border-[0.2px] border-bl200 text-black text-[0.3rem]"
+              className={`w-full h-full ${capturing ? "border-0" : "border-[0.2px]"} border-bl200 text-black text-[0.3rem]`}
               style={{ background: val }}
               onMouseDown={(e) => {
                 if (e.button == 0) {
