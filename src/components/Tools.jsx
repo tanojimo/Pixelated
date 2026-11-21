@@ -81,7 +81,11 @@ const Tools = ({
             undo();
           }}
         >
-          <img src="/undo.svg" alt="" className="w-full" />
+          <img
+            src={`${import.meta.env.BASE_URL}undo.svg`}
+            alt=""
+            className="w-full"
+          />
         </div>
         <div
           className="w-7 aspect-square p-1.5 bg-green-500 rounded-xl flex justify-center items-center text-[0.8rem] cursor-pointer hover:shadow-[0_0_10px_rgba(255,255,255,255)] duration-75"
@@ -89,7 +93,11 @@ const Tools = ({
             redo();
           }}
         >
-          <img src="/redo.svg" alt="" className="w-full" />
+          <img
+            src={`${import.meta.env.BASE_URL}redo.svg`}
+            alt=""
+            className="w-full"
+          />
         </div>
         <div
           className="w-7 aspect-square p-1.5 bg-red-500 rounded-xl flex justify-center items-center text-[0.8rem] cursor-pointer hover:shadow-[0_0_10px_rgba(255,255,255,255)] duration-75"
@@ -97,7 +105,11 @@ const Tools = ({
             setCanvas((prev) => prev.map((row) => row.map(() => "#3e3e3e")))
           }
         >
-          <img src="/trash.svg" alt="" className="w-full" />
+          <img
+            src={`${import.meta.env.BASE_URL}trash.svg`}
+            alt=""
+            className="w-full"
+          />
         </div>
       </div>
 
