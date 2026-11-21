@@ -24,6 +24,8 @@ The webapp has some other useful features.
 
 ### Screenshots
 
+<img width="960" height="422" alt="image" src="https://github.com/user-attachments/assets/7a7cabaf-1116-40ae-9c4c-4fd50087aac9" />
+
 ## Build with
 
 - HTML5
