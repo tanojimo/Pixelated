@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const Canvas = ({
   canvas,
@@ -15,7 +15,10 @@ const Canvas = ({
   historyIndex,
   setHistoryIndex,
   capturing,
+  containerRef,
 }) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const panRef = useRef({ active: false, lastX: 0, lastY: 0 });
   const lastPixel = useRef(null);
   const paintLine = (x0, y0, x1, y1, color, erase = false) => {
     const dx = x1 - x0;
@@ -81,7 +84,36 @@ const Canvas = ({
     }
   };
   return (
-    <div className="w-full h-full flex gap-4 justify-center items-center overflow-hidden">
+    <div
+      ref={containerRef}
+      className="w-full h-full flex gap-4 justify-center items-center overflow-hidden"
+      onMouseDown={(e) => {
+        if (e.button === 1) {
+          e.preventDefault();
+          panRef.current.active = true;
+          panRef.current.lastX = e.clientX;
+          panRef.current.lastY = e.clientY;
+        }
+      }}
+      onMouseMove={(e) => {
+        if (panRef.current.active) {
+          const dx = e.clientX - panRef.current.lastX;
+          const dy = e.clientY - panRef.current.lastY;
+
+          setPosition((prev) => ({
+            x: prev.x + dx,
+            y: prev.y + dy,
+          }));
+
+          panRef.current.lastX = e.clientX;
+          panRef.current.lastY = e.clientY;
+        }
+      }}
+      onMouseUp={() => {
+        panRef.current.active = false;
+      }}
+      onAuxClick={(e) => e.preventDefault()}
+    >
       <div
         ref={canvasRef}
         onDragStart={(e) => e.preventDefault()}
@@ -94,7 +126,7 @@ const Canvas = ({
         }}
         onContextMenu={(e) => e.preventDefault()}
         style={{
-          transform: `scale(${scale})`,
+          transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
           userSelect: "none",
           WebkitUserDrag: "none",
           touchAction: "none",

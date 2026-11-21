@@ -7,6 +7,7 @@ const App = () => {
   const initialCanvas = Array.from({ length: gridVal }, () =>
     Array(gridVal).fill("#3e3e3e"),
   );
+  const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const pickerRef = useRef(null);
   const [capturing, setCapturing] = useState(false);
@@ -25,7 +26,7 @@ const App = () => {
   });
   const [canvas, setCanvas] = useState(initialCanvas);
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = containerRef.current;
 
     const handleWheel = (e) => {
       e.preventDefault();
@@ -110,6 +111,7 @@ const App = () => {
         historyIndex={historyIndex}
         setHistoryIndex={setHistoryIndex}
         capturing={capturing}
+        containerRef={containerRef}
       />
     </div>
   );
