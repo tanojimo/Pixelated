@@ -1,16 +1,43 @@
-# React + Vite
+# Pixelated
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Pixelated is a simple web-based pixel art creation tool
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Pixelated is kind of like a really stripped down web version of aseprite (That's just larp). This can be used to make simple pixel art
 
-## React Compiler
+This webapp offers four basic tools for drawing. These are:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Paint Brush: A brush/pencil tool. Can be used to draw indivual pixels
+- Paint Bucket: This tool fills a selected with choosen color
+- Eraser: Erases stuff
+- Dropper: Selects color from any pixel clicked inside canvas
 
-## Expanding the ESLint configuration
+The webapp has some other useful features.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Undo and Redo capability
+- Clear Canvas button
+- Dual color picker for both left and right click
+- Color palette to save specific colors
+- Export feature to save art as png
+- Canvas zooming and panning
+
+### Screenshots
+
+## Build with
+
+- HTML5
+- ReactJS
+- Javascript
+- TailwindCSS
+- NodeJS
+- html2canvas
+
+## Help
+
+1. The webpage looks weird
+   - Zoom in or zoom out and see if the page looks ok or not. I tried to make the page responsive. If it's bad I'm sorry!
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
