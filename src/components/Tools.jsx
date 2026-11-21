@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import Brush from "./svg/brush";
-import Bucket from "./svg/bucket";
-import Eraser from "./svg/eraser";
-import Picker from "./svg/picker";
+import Brush from "./svg/Brush";
+import Bucket from "./svg/Bucket";
+import Eraser from "./svg/Eraser";
+import Picker from "./svg/Picker";
 import html2canvas from "html2canvas";
 import { flushSync } from "react-dom";
 
