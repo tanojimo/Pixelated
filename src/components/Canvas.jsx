@@ -80,7 +80,7 @@ const Canvas = ({
     }
   };
   return (
-    <div className="col-span-10 w-full h-full flex justify-center items-center">
+    <div className="col-span-10 w-full h-full flex gap-4 justify-center items-center">
       <div
         ref={canvasRef}
         onDragStart={(e) => e.preventDefault()}

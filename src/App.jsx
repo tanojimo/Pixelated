@@ -15,6 +15,13 @@ const App = () => {
   const [scale, setScale] = useState(1);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [history, setHistory] = useState([initialCanvas]);
+  const [palette, setPalette] = useState([]);
+  const [contextMenu, setContextMenu] = useState({
+    visible: false,
+    x: 0,
+    y: 0,
+    color: null,
+  });
   const [canvas, setCanvas] = useState(initialCanvas);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -36,22 +43,37 @@ const App = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const picker = new iro.ColorPicker(pickerRef.current, {
-  //     width: 100,
-  //     color: selectedColorLeft,
-  //   });
-
-  //   picker.on("color:change", (color) => {
-  //     setSelectedColorLeft(color.hexString);
-  //   });
-  //   return () => {
-  //     pickerRef.current.innerHTML = "";
-  //   };
-  // }, []);
-
   return (
-    <div className="w-screen min-h-screen grid grid-cols-12">
+    <div
+      className="w-screen min-h-screen grid grid-cols-12"
+      onClick={() => {
+        setContextMenu((prev) => ({ ...prev, visible: false, color: null }));
+      }}
+    >
+      {contextMenu.visible && (
+        <div
+          className="fixed bg-bl400 w-30 h-10 rounded-xl text-sm cursor-pointer flex items-center select-none z-20 overflow-hidden"
+          style={{ left: contextMenu.x, top: contextMenu.y }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div
+            className="hover:bg-bl300 w-full h-[80%] active:bg-bl400 flex justify-center items-center duration-75"
+            onClick={() => {
+              const color = contextMenu.color;
+              setContextMenu((prev) => ({
+                ...prev,
+                visible: false,
+                color: null,
+              }));
+              if (!palette.includes(color)) {
+                setPalette((prev) => [...prev, color]);
+              }
+            }}
+          >
+            <p>Add to Pallete</p>
+          </div>
+        </div>
+      )}
       <Tools
         selected={selected}
         setSelected={setSelected}
@@ -65,6 +87,9 @@ const App = () => {
         historyIndex={historyIndex}
         history={history}
         gridVal={gridVal}
+        setContextMenu={setContextMenu}
+        palette={palette}
+        setPalette={setPalette}
       />
       <Canvas
         canvas={canvas}

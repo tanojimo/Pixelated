@@ -9,6 +9,13 @@
   --color-text: #fffff0;
 }
 
+* {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
 body {
   @apply bg-bl500 text-text;
 }
